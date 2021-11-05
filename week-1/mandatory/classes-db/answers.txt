@@ -1,0 +1,83 @@
+CREATE TABLE mentors(
+    id                  SERIAL PRIMARY KEY,
+   name                 VARCHAR(30)  NOT NULL,
+   years_in_Glasgow     INT NOT NULL,
+   address              VARCHAR(150),
+   favourite_language   VARCHAR(30)
+);
+INSERT INTO mentors (name,years_in_Glasgow,address,favourite_language) VALUES ('Kevin',5,'Middle of Nowhere','JavaScript');
+INSERT INTO mentors (name,years_in_Glasgow,address,favourite_language) VALUES ('Ken',25,'Glasgow old town','C++');
+INSERT INTO mentors (name,years_in_Glasgow,address,favourite_language) VALUES ('Jane',7,'Glsgow business area','Ruby on Rails');
+INSERT INTO mentors (name,years_in_Glasgow,address,favourite_language) VALUES ('BOB',10,'Middle of Glasgow','React');
+INSERT INTO mentors (name,years_in_Glasgow,address,favourite_language) VALUES ('Mary',12,'Center of Glasgow','JavaScript');
+
+SELECT * FROM mentors
+
+CREATE TABLE students (
+   id                   SERIAL PRIMARY KEY,
+   name                 VARCHAR(30)  NOT NULL,
+   address              VARCHAR(150),
+   graduated_CYF        VARCHAR(3)
+);
+
+INSERT INTO students (name, address, graduated_CYF) VALUES ('Alex', 'Secret Adress 1', 'yes');
+INSERT INTO students (name, address, graduated_CYF) VALUES ('Emma', 'Secret Adress 2', 'yes');
+INSERT INTO students (name, address, graduated_CYF) VALUES ('Claus', 'Secret Adress 3', 'no');
+INSERT INTO students (name, address, graduated_CYF) VALUES ('Santa', 'Secret Adress 4', 'yes');
+INSERT INTO students (name, address, graduated_CYF) VALUES ('Peter', 'Secret Adress 5', 'yes');
+INSERT INTO students (name, address, graduated_CYF) VALUES ('Nancy', 'Secret Adress 6', 'no');
+INSERT INTO students (name, address, graduated_CYF) VALUES ('Anna', 'Secret Adress 7', 'no');
+INSERT INTO students (name, address, graduated_CYF) VALUES ('Olivia', 'Secret Adress 8', 'yes');
+INSERT INTO students (name, address, graduated_CYF) VALUES ('Max', 'Secret Adress 9', 'no');
+INSERT INTO students (name, address, graduated_CYF) VALUES ('Luke', 'Secret Adress 10', 'no');
+
+SELECT * FROM students
+
+
+CREATE TABLE classes(
+   id                   SERIAL PRIMARY KEY,
+   mentor               INT REFERENCES mentors(id),
+   class_topic          VARCHAR(30)  NOT NULL,
+   location             VARCHAR(150) NOT NULL,
+   date                 DATE NOT NULL
+);
+
+INSERT INTO classes (mentor,class_topic, location,date) VALUES (4,'JavaScript','Glasgow','2021-05-25');
+INSERT INTO classes (mentor,class_topic, location,date) VALUES (1,'JavaScript','Glasgow','2021-06-01');
+INSERT INTO classes (mentor,class_topic, location,date) VALUES (2,'C++','Glasgow','2021-10-11');
+
+INSERT INTO classes (mentor,class_topic, location,date) VALUES (3,'Ruby on Rails','Glasgow','2021-03-03');
+INSERT INTO classes (mentor,class_topic, location,date) VALUES (5,'React','Glasgow','2021-01-28');
+SELECT * FROM classes
+
+CREATE TABLE students_classes_choice (
+   id             SERIAL PRIMARY KEY,
+   student_id     INT REFERENCES students(id),
+   class_id       INT REFERENCES classes(id)
+);
+
+
+INSERT INTO students_classes_choice (student_id,class_id)   VALUES (1,4);
+INSERT INTO students_classes_choice (student_id,class_id)   VALUES (2,5);
+INSERT INTO students_classes_choice (student_id,class_id)   VALUES (3,2);
+INSERT INTO students_classes_choice (student_id,class_id)   VALUES (4,4);
+INSERT INTO students_classes_choice (student_id,class_id)   VALUES (5,1);
+INSERT INTO students_classes_choice (student_id,class_id)   VALUES (6,1);
+INSERT INTO students_classes_choice (student_id,class_id)   VALUES (7,2);
+INSERT INTO students_classes_choice (student_id,class_id)   VALUES (8,3);
+INSERT INTO students_classes_choice (student_id,class_id)   VALUES (9,3);
+INSERT INTO students_classes_choice (student_id,class_id)   VALUES (10,5);
+
+
+
+1.SELECT * FROM mentors WHERE years_in_Glasgow > 5;
+
+2.SELECT * FROM mentors WHERE favourite_language = 'JavaScript';
+
+3.SELECT * FROM students WHERE graduated_CYF = 'yes';
+
+4.SELECT * FROM classes WHERE  date < '2021-06-01';
+
+5.SELECT student_id FROM students_classes_choice WHERE  class_id=1 OR class_id=2;
+
+
